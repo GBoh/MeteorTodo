@@ -1,0 +1,15 @@
+<template name="todoItem">
+  <div class="row valign-wrapper {{checked}} animated flipInX">
+    <div class="col s1 valign">
+      <input type="checkbox" class="filled-in" id="{{_id}}" {{checked}}>
+      <label hidden for="{{_id}}"></label>
+      <!-- label for, required for materialize checkboxes to work -->
+    </div>
+    <div class="col s4 valign">
+      <input type="text" name="todoItem" class="truncate" value="{{name}}">
+    </div>
+    <div class="col s7 valign">
+      <input type="button" class="delete-todo btn red" value="Delete">
+    </div>
+  </div>
+</template>

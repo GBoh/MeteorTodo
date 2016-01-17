@@ -1,0 +1,16 @@
+<template name="todos">
+  {{>addTodo}}
+  <!-- shows the non complete todos -->
+  <div>
+      {{#each todo}}
+        {{>todoItem}}
+      {{/each}}
+  </div>
+  <!-- iterates over the checked todos -->
+  <div>
+    {{#each todoComplete}}
+      {{>todoItem}}
+    {{/each}}
+  </div>
+  {{> todosCount}}
+</template>
