@@ -12,6 +12,7 @@ Router.route('/', {
 });
 
 Router.route('/list/:_id', {
+  name: 'listPage',
   template: 'listPage',
   data: function() {
     var currentId = this.params._id;

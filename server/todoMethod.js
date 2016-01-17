@@ -34,7 +34,7 @@ Meteor.methods({
   },
   'insertListData': function(listName) {
     if (listName) {
-      Lists.insert({
+    return Lists.insert({
         name: listName
       });
     }

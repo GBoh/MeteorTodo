@@ -39,10 +39,19 @@ Template.todoItem.events({
 });
 
 Template.addList.events({
-  "submit form": function(event){
-     event.preventDefault();
-     var listName= $('[name=listName]').val();
-     Meteor.call('insertListData', listName);
-     $('[name=listName]').val('');
+  "submit form": function(event) {
+    event.preventDefault();
+    var listName = $('[name=listName]').val();
+    Meteor.call("insertListData", listName, function(error, result) {
+      if (error) {
+        console.log("error", error.reason);
+      }
+      if (result) {
+        Router.go('listPage', {
+          _id: result
+        });
+      }
+    });
+    $('[name=listName]').val('');
   }
 });
