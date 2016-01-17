@@ -32,10 +32,15 @@ Template.todoItem.helpers({
 
 Template.todosCount.helpers({
   'totalTodos': function() {
-    return Todos.find().count();
+    var currentList = this._id;
+    return Todos.find({
+      listId: currentList
+    }).count();
   },
   'completeTodos': function() {
+    var currentList = this._id;
     return Todos.find({
+      listId: currentList,
       completed: true
     }).count();
   }
