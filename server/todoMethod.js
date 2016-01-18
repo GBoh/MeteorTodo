@@ -1,11 +1,13 @@
 Meteor.methods({
   'insertTodoData': function(todoName, currentList) {
     if (todoName) {
+      var currentUser = Meteor.userId();
       Todos.insert({
         name: todoName,
         completed: false,
         createdAt: new Date(),
-        listId : currentList
+        createdBy: currentUser,
+        listId: currentList
       });
     }
   },
@@ -34,9 +36,12 @@ Meteor.methods({
   },
   'insertListData': function(listName) {
     if (listName) {
-    return Lists.insert({
-        name: listName
-      });
+      var currentUser = Meteor.userId();
+      var data = {
+        name: listName,
+        createBy: currentUser
+      };
+      return Lists.insert(data);
     }
   }
 });

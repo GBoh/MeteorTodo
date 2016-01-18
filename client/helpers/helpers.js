@@ -1,9 +1,11 @@
 Template.todos.helpers({
   'todo': function() {
     var currentList = this._id;
+    var currentUser = Meteor.userId();
     return Todos.find({
       listId: currentList,
-      completed: false
+      completed: false,
+      createdBy: currentUser
     }, {
       sort: {
         createdAt: -1
@@ -12,9 +14,11 @@ Template.todos.helpers({
   },
   'todoComplete': function() {
     var currentList = this._id;
+    var currentUser = Meteor.userId();
     return Todos.find({
       listId: currentList,
-      completed: true
+      completed: true,
+      createdBy: currentUser
     });
   }
 });
@@ -33,14 +37,18 @@ Template.todoItem.helpers({
 Template.todosCount.helpers({
   'totalTodos': function() {
     var currentList = this._id;
+    var currentUser = Meteor.userId();
     return Todos.find({
-      listId: currentList
+      listId: currentList,
+      createdBy: currentUser
     }).count();
   },
   'completeTodos': function() {
     var currentList = this._id;
+    var currentUser = Meteor.userId();
     return Todos.find({
       listId: currentList,
+      createdBy: currentUser,
       completed: true
     }).count();
   }
@@ -48,7 +56,10 @@ Template.todosCount.helpers({
 
 Template.lists.helpers({
   'list': function() {
-    return Lists.find({}, {
+    var currentUser = Meteor.userId();
+    return Lists.find({
+      createdBy: currentUser
+    }, {
       sort: {
         name: 1
       }

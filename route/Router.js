@@ -19,5 +19,13 @@ Router.route('/list/:_id', {
     return Lists.findOne({
       _id: currentId
     });
+  },
+  onBeforeAction: function(){
+    var currentUser = Meteor.userId();
+    if(currentUser){
+      this.next();
+    }else{
+      this.render('login');
+    }
   }
 });

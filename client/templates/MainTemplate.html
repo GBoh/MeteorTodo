@@ -1,10 +1,12 @@
 <template name="main">
-  <!-- {{> navigation}} -->
+  {{> navigation}}
   <div class="row">
-    <div class="col s3">
-      {{> lists}}
+    <div class="col s2">
+      {{#if currentUser}}
+        {{> lists}}
+      {{/if}}
     </div>
-    <div class="col s9">
+    <div class="col s10">
       {{> yield}}
     </div>
   </div>
