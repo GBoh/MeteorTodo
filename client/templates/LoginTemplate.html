@@ -1,16 +1,22 @@
 <template name="login">
     <h2>login</h2>
+    <label id="generalError"></label>
     <form class="login">
       <div class="input-field">
-        <input type="email" name="email" id="email">
+        <input type="email" name="email" id="email" required>
         <label for="email">Email</label>
       </div>
+      <span id="emailErrors"></span>
+
       <div class="input-field">
-        <input type="password" name="password" id="password">
+        <input type="password" name="password" id="password" required>
         <label for="password">Password</label>
       </div>
+      <span id="passwordErrors"></span>
+
       <div>
         <input class="btn" type="submit" value="Login">
       </div>
+
     </form>
 </template>

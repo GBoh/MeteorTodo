@@ -39,7 +39,7 @@ Meteor.methods({
       var currentUser = Meteor.userId();
       var data = {
         name: listName,
-        createBy: currentUser
+        createdBy: currentUser
       };
       return Lists.insert(data);
     }

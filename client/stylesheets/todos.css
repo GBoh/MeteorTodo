@@ -25,3 +25,15 @@
 .checked [name=todoItem], .checked [name=todoItem]:hover, .checked [name=todoItem]:focus {
   background-color: #f0f0f0;
 }
+
+/*
+ERRORS
+*/
+
+input.error {
+  border-bottom: 1px solid red;
+  box-shadow: 0 1px 0 0 red;
+}
+label.error{
+  color: red;
+}

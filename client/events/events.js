@@ -56,42 +56,101 @@ Template.addList.events({
   }
 });
 
-//registration
-Template.register.events({
-  "submit form": function(event) {
-    event.preventDefault();
-    var email = $('[name=email]').val();
-    var password = $('[name=password]').val();
-    Accounts.createUser({
-      email: email,
-      password: password
-    });
-    Router.go('home');
-  }
-});
-
 Template.navigation.events({
-  "click .logout": function(event){
+  "click .logout": function(event) {
     event.preventDefault();
     Meteor.logout();
     Router.go('login');
   }
 });
 
-Template.login.events({
-  "submit form": function(event){
+//registration
+Template.register.events({
+  "submit form": function(event) {
     event.preventDefault();
-    var email = $('[name=email]').val();
-    var password = $('[name=password]').val();
-    Meteor.loginWithPassword(email, password, function(error){
-      if(error){
-        console.log(error);
-      }else{
-        var currentRoute = Router.current().route.getName();
-        if(currentRoute === 'login'){
+  }
+});
+
+Template.register.onRendered(function() {
+  var validator = $('.register').validate({
+    submitHandler: function(event) {
+      var email = $('[name=email]').val();
+      var password = $('[name=password]').val();
+      var general = $('#generalError');
+
+      Accounts.createUser({
+        email: email,
+        password: password
+      }, function(error) {
+        if (error) {
+          validator.showErrors({
+            email: error.reason
+          });
+        } else {
           Router.go('home');
         }
-      }
-    });
+      });
+    }
+  });
+});
+
+///login
+Template.login.events({
+  "submit form": function(event) {
+    event.preventDefault();
+  }
+});
+
+Template.login.onRendered(function() {
+  var validator = $('.login').validate({
+    submitHandler: function(event) {
+      var email = $('[name=email]').val();
+      var password = $('[name=password]').val();
+      var general = $('#generalError');
+
+      Meteor.loginWithPassword(email, password, function(error) {
+        if (error) {
+          general.append('Invalid username or password').addClass('error');
+        } else {
+          var currentRoute = Router.current().route.getName();
+          if (currentRoute === 'login') {
+            Router.go('home');
+          }
+        }
+      });
+    }
+  });
+});
+
+
+$.validator.setDefaults({
+  rules: {
+    email: {
+      required: true,
+      email: true
+    },
+    password: {
+      required: true,
+      minlength: 6
+    }
+  },
+  messages: {
+    email: {
+      required: 'You must enter an email address',
+      email: 'You\'ve entered an invalid email address'
+    },
+    password: {
+      required: 'You must enter a password',
+      minlength: 'Your password must be at least {0} characters'
+    }
+  },
+  errorPlacement: function(error, element) {
+    if (element.attr('name') === 'email') {
+      error.appendTo('#emailErrors');
+    }
+
+    if (element.attr('name') === 'password') {
+      error.appendTo('#passwordErrors');
+    }
   }
 });

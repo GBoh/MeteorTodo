@@ -1,15 +1,20 @@
 <template name="register">
   <h2>Register</h2>
+  <label id="generalError"></label>
   <form class="register">
     <div class="input-field">
       <input type="email" name="email" id="email" class="validate" />
       <label for="email">Email</label>
     </div>
+    <span id="emailErrors"></span>
+
 
     <div class="input-field">
       <input type="password" name="password" id="password" class="validate" />
       <label for="password">Password</label>
     </div>
+    <span id="passwordErrors"></span>
+
     <div>
       <input type="submit" value="Register" class="btn">
     </div>
