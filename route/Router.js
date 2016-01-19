@@ -20,12 +20,16 @@ Router.route('/list/:_id', {
       _id: currentId
     });
   },
-  onBeforeAction: function(){
+  onBeforeAction: function() {
     var currentUser = Meteor.userId();
-    if(currentUser){
+    if (currentUser) {
       this.next();
-    }else{
+    } else {
       this.render('login');
     }
+  },
+  subscriptions: function() {
+    var currentList = this.params._id;
+    return Meteor.subscribe("todos", currentList);
   }
 });

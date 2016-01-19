@@ -1,11 +1,12 @@
-Meteor.publish("todosList", function() {
+Meteor.publish("todos", function(currentList) {
   var currentUser = this.userId;
   return Todos.find({
-    createdBy: currentUser
+    createdBy: currentUser,
+    listId: currentList
   });
 });
 
-Meteor.publish("listsList", function() {
+Meteor.publish("lists", function() {
   var currentUser = this.userId;
   return Lists.find({
     createdBy: currentUser
