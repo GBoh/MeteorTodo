@@ -3,8 +3,13 @@ Template.addTodo.events({
     event.preventDefault();
     var todoName = $('[name="todoName"]').val();
     var currentList = this._id;
-    Meteor.call('insertTodoData', todoName, currentList);
-    $('[name=todoName]').val('');
+    Meteor.call('insertTodoData', todoName, currentList, function(error) {
+      if (error) {
+        console.log(error.reason);
+      } else {
+        $('[name=todoName]').val('');
+      }
+    });
   }
 });
 
@@ -18,11 +23,12 @@ Template.todoItem.events({
     }
   },
   'keyup [name=todoItem]': function(event) {
-    var documentId = this._id;
-    var todoItem = $(event.target).val();
-    Meteor.call('updateTodoData', documentId, todoItem);
     if (event.which === 13 || event.which === 27) {
       $(event.target).blur();
+    } else {
+      var documentId = this._id;
+      var todoItem = $(event.target).val();
+      Meteor.call('updateTodoData', documentId, todoItem);
     }
   },
   'click [type=checkbox]': function() {
@@ -30,10 +36,8 @@ Template.todoItem.events({
     var isCompleted = this.completed;
     if (isCompleted) {
       Meteor.call('changeItemStatus', documentId, false);
-      console.log('checked');
     } else {
       Meteor.call('changeItemStatus', documentId, true);
-      console.log('unchecked');
     }
   }
 });
@@ -50,9 +54,27 @@ Template.addList.events({
         Router.go('listPage', {
           _id: result
         });
+        $('[name=listName]').val('');
+
       }
     });
-    $('[name=listName]').val('');
+  }
+});
+
+
+Template.lists.events({
+  'click .delete': function(event){
+    event.preventDefault();
+    var documentId = this._id;
+    console.log(documentId);
+    Meteor.call("removeList", documentId, function(error, result){
+      if(error){
+        console.log("error", error);
+      }
+      if(result){
+        Router.go('home');
+      }
+    });
   }
 });
 

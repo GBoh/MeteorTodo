@@ -1,5 +1,6 @@
 Router.configure({
-  layoutTemplate: "main"
+  layoutTemplate: "main",
+  loadingTemplate: 'loading'
 });
 
 Router.route("/register");
@@ -8,7 +9,10 @@ Router.route("/login");
 
 Router.route('/', {
   name: 'home',
-  template: 'home'
+  template: 'home',
+  waitOn: function(){
+    return Meteor.subscribe("lists");
+  }
 });
 
 Router.route('/list/:_id', {
@@ -28,8 +32,9 @@ Router.route('/list/:_id', {
       this.render('login');
     }
   },
-  subscriptions: function() {
+  waitOn: function() {
     var currentList = this.params._id;
-    return Meteor.subscribe("todos", currentList);
+    return [Meteor.subscribe("lists"),
+            Meteor.subscribe("todos", currentList)];
   }
 });

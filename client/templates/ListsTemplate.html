@@ -4,8 +4,8 @@
     {{> addList}}
     <div>
       {{#each list}}
-      <div>
-        <a href="{{pathFor route='listPage'}}" class="btn">{{name}}</a>
+      <div class="row">
+        <a href="{{pathFor route='listPage'}}" class="btn col s9">{{name}}</a><i class="material-icons btn red col s2 delete">X</i>
       </div>
       {{/each}}
     </div>
